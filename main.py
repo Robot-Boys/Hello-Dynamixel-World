@@ -6,7 +6,7 @@ from MotorTester import MotorTester
 
 #custom_config = {'motors': {'m1': {'angle_limit': [-90.0, 90.0], 'type': 'MX-28', 'orientation': 'direct', 'offset': 0.0, 'id': 1}, 'm2': {'angle_limit': [-90.0, 90.0], 'type': 'MX-28', 'orientation': 'indirect', 'offset': 0.0, 'id': 2}}, 'motorgroups': {'base': ['m1', 'm2']}, 'controllers': {'my_dxl_controller': {'port': '/dev/ttyACM3', 'sync_read': False, 'attached_motors': ['base']}}}
 
-tester = MotorTester();
+tester = MotorTester("/dev/ttyACM3")
 
 my_robot = tester.test_robot()
 my_robot.start_sync()
@@ -19,24 +19,22 @@ start_pos = {'m4': 0,
 
 print("ZEEERRROOOOO")
 
-tester.robot_move(my_robot, start_pos, 3, "dummy", True)
+tester.robot_move(my_robot, start_pos, .1, None, True)
 
 rest_pos = {'m4': 90,
             'm5': 45}
 
 print("FORRRWARD")
 
-tester.robot_move(my_robot, rest_pos, 3, "dummy", True)
-
+tester.robot_move(my_robot, rest_pos, .1, None, True)
 
 print("BACK")
 
-
-tester.robot_move(my_robot, start_pos, 3, "minjerk", True)
+tester.robot_move(my_robot, start_pos, .1, None, True)
 
 print("AAAGAIIIN")
 
-tester.robot_move(my_robot, rest_pos, 3, "minjerk", True)
+tester.robot_move(my_robot, rest_pos, .1, None, True)
 
 
 time.sleep(10)

@@ -5,8 +5,9 @@ import pypot.robot
 import pypot.dynamixel
 
 class MotorTester(object):
-    def __main__(self):
-        pass
+
+    def __init__(self, port):
+        self.port = port
 
     def test_robot(self):
         custom_config = {
@@ -14,7 +15,7 @@ class MotorTester(object):
             'my_dxl_controller': {
                 'sync_read': False,
                 'attached_motors': ['base'],
-                'port': '/dev/ttyACM3'
+                'port': self.port
             }
         },
         'motorgroups': {
@@ -42,7 +43,7 @@ class MotorTester(object):
 
     def scan_motors(self):
         print(pypot.dynamixel.get_available_ports())
-        dxl_io = pypot.dynamixel.DxlIO('/dev/ttyACM3')
+        dxl_io = pypot.dynamixel.DxlIO(self.port)
         print(dxl_io.scan())
 
     def robot_move(self, robot, position, duration, type, wait):
