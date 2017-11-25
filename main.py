@@ -6,8 +6,8 @@ from MotorTester import MotorTester
 
 #custom_config = {'motors': {'m1': {'angle_limit': [-90.0, 90.0], 'type': 'MX-28', 'orientation': 'direct', 'offset': 0.0, 'id': 1}, 'm2': {'angle_limit': [-90.0, 90.0], 'type': 'MX-28', 'orientation': 'indirect', 'offset': 0.0, 'id': 2}}, 'motorgroups': {'base': ['m1', 'm2']}, 'controllers': {'my_dxl_controller': {'port': '/dev/ttyACM3', 'sync_read': False, 'attached_motors': ['base']}}}
 
-tester = MotorTester("/dev/ttyACM3")
-tester.scan_ports()
+tester = MotorTester()
+#tester.scan_ports()
 my_robot = tester.test_robot()
 my_robot.start_sync()
 
@@ -17,8 +17,9 @@ my_robot.start_sync()
 #tester.robot_move(my_robot, end_pos, 10, None, True)
 #scan_motors()
 
+tester.reset_robot(my_robot)
 for i in range(1, 100):
-    tester.ease_move(my_robot, 90)
+    tester.ease_move_position(my_robot, 160)
 
 
 my_robot.close()
