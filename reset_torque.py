@@ -19,4 +19,3 @@ led = dxl_io.is_led_on(found_ids)
 print("LED", led)
 
 dxl_io.enable_torque(found_ids)
-

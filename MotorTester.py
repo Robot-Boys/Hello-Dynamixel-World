@@ -38,14 +38,14 @@ class MotorTester(object):
                     'orientation': 'indirect',
                     'type': 'MX-28',
                     'id': 1,
-                    'angle_limit': [-90.0, 90.0],
+                    'angle_limit': [-70.0, 70.0],
                     'offset': 0.0
                 },
                 'm4': {
                     'orientation': 'direct',
                     'type': 'MX-28',
                     'id': 2,
-                    'angle_limit': [-90.0, 90.0],
+                    'angle_limit': [-70.0, 70.0],
                     'offset': 0.0
                 }
             }
@@ -108,4 +108,41 @@ class MotorTester(object):
             motor.goal_position = ease_pos
             time.sleep(0.000000000001)
 
-    
+    def ease_by_speed(self, motor, goal, speed):
+        print("SPEED")
+        margin = 2;
+        target = goal - motor.present_position
+        start = motor.present_position
+        print("Goal", goal)
+        print("Target", target)
+        print("Present position", motor.present_position)
+        print(motor.present_position < goal)
+
+        time.sleep(3)
+
+        if target > 0:
+            while motor.present_position < goal:
+                self.move_motor_by_speed(motor, target, goal, start, speed)
+        else:
+            while motor.present_position > goal + margin:
+                self.move_motor_by_speed(motor, target, goal, start, speed)
+
+        motor.goal_speed = 0
+
+    def move_motor_by_speed(self, motor, target, goal, start, speed):
+        travel_distance = goal - motor.present_position
+        #ease_factor = easing.easeInOutSine(travel_distance, start, 0.7, target) - 1
+        ease_factor = 1
+        self.set_direction(motor, target, ease_factor * speed)
+        print(motor.present_position)
+        time.sleep(0.00000001)
+
+    def set_direction(self, motor, target, speed):
+        if target < 0:
+            speed *= -1
+
+        #print(speed)
+        motor.goal_speed = speed
+
+
+

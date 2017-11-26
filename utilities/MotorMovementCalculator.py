@@ -7,5 +7,5 @@ class MotorMovementCalculator(object):
 
     def reset(self):
         self.current_step = 0;
-
+        self.motor._set_compliancy()
 
