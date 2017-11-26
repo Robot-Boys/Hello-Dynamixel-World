@@ -107,3 +107,5 @@ class MotorTester(object):
             print(ease_pos)
             motor.goal_position = ease_pos
             time.sleep(0.000000000001)
+
+    

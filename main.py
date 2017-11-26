@@ -18,7 +18,7 @@ my_robot.start_sync()
 #scan_motors()
 
 tester.reset_robot(my_robot)
-for i in range(1, 100):
+for i in range(1, 1000):
     tester.ease_move_position(my_robot, 160)
 
 
