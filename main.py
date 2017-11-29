@@ -19,11 +19,15 @@ my_robot.start_sync()
 
 tester.reset_robot(my_robot)
 
-tester.ease_by_speed(my_robot.m5, 10, 8)
+tester.ease_by_speed(my_robot.m5, 10, 2)
 
 time.sleep(1)
 
-tester.ease_by_speed(my_robot.m5, -50, 3)
+tester.ease_by_speed(my_robot.m5, -50, 2)
+
+time.sleep(1)
+
+tester.ease_by_speed(my_robot.m5, 70, 2)
 
 time.sleep(1)
 

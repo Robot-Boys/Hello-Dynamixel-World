@@ -1,5 +1,6 @@
 import time
 import easing
+from easing.SinEase import SinEase
 
 from pypot.robot.config import ergo_robot_config
 import pypot.robot
@@ -102,7 +103,7 @@ class MotorTester(object):
 
     def calculate_ease_degress(self, goal, current_position, robot, steps):
         for motor in robot.motors:
-            ease_factor = easing.easeInOutSine(current_position, 1, 1, steps) - 1
+            ease_factor = SinEase.calculate_next_step(current_position, 1, 1, steps) - 1
             ease_pos = (90 - (goal * ease_factor))
             print(ease_pos)
             motor.goal_position = ease_pos
@@ -115,6 +116,7 @@ class MotorTester(object):
         start = motor.present_position
         print("Goal", goal)
         print("Target", target)
+        print("TRavel Distance: ", goal - motor.present_position)
         print("Present position", motor.present_position)
         print(motor.present_position < goal)
 
@@ -130,11 +132,12 @@ class MotorTester(object):
         motor.goal_speed = 0
 
     def move_motor_by_speed(self, motor, target, goal, start, speed):
-        travel_distance = goal - motor.present_position
-        #ease_factor = easing.easeInOutSine(travel_distance, start, 0.7, target) - 1
-        ease_factor = 1
-        self.set_direction(motor, target, ease_factor * speed)
-        print(motor.present_position)
+        remaining_travel_distance = abs(goal - motor.present_position) + 1
+        remaining_travel_distance *= 100
+        ease_factor = SinEase.calculate_next_step(remaining_travel_distance, target, 1, 1) - 1
+        ease_factor = abs(ease_factor)
+        print(remaining_travel_distance)
+        self.set_direction(motor, target, ease_factor/speed)
         time.sleep(0.00000001)
 
     def set_direction(self, motor, target, speed):

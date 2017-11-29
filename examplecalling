@@ -1,0 +1,7 @@
+movement = Movement(Motor, movement)
+
+movement.setmovement(SINE)
+
+movement.setGoal(180)
+
+step = movement.next()
